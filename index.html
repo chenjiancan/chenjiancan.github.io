@@ -259,6 +259,168 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://chenjiancan.github.io/2018/08/12/使用gitment评论系统/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Chen Jiancan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ChenJiancan'Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/08/12/使用gitment评论系统/" itemprop="url">使用gitment评论系统</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-08-12T13:46:28+08:00">
+                2018-08-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/blog/" itemprop="url" rel="index">
+                    <span itemprop="name">blog</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>本篇日志记录如何使用 gitment 为博客提供评论系统</p>
+<h1 id="0x0-Gitment"><a href="#0x0-Gitment" class="headerlink" title="0x0 Gitment"></a>0x0 Gitment</h1><p><a href="https://github.com/aimingoo/gitment" target="_blank" rel="noopener">Gitment</a></p>
+<p>是一个基于 github issue 系统作为评论数据的评论系统，hexo next 主题支持 Gitment</p>
+<p>它的特点是不需要部署服务端，使用 github repo 的issue作为数据空间，这一点跟 hexo 使用 github pages 的调调很搭。</p>
+<h1 id="0x1-准备"><a href="#0x1-准备" class="headerlink" title="0x1 准备"></a>0x1 准备</h1><ol>
+<li><p>首先，我们得创建一个 github repo<br>直接使用博客的 repo 就可以了</p>
+</li>
+<li><p>其次, 需要创建 github auth 应用</p>
+</li>
+</ol>
+<p>进入 <a href="https://github.com/settings/developers" target="_blank" rel="noopener">https://github.com/settings/developers</a> 创建  OAuth Apps；<br>填写相关信息<br>应用名如： Gitment<br>homepage url: <a href="https://chenjiancan.github.io">https://chenjiancan.github.io</a><br><a href="https://chenjiancan.github.io">https://chenjiancan.github.io</a></p>
+<p>创建完成得到了 Client ID &amp; Client Secret，用于配置 gitment 应用</p>
+<ol start="3">
+<li>配置next主题<br>编辑 next/_config.yaml, 找到 gitment 部分<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">gitment:</span><br><span class="line">  enable: true</span><br><span class="line">  mint: true # RECOMMEND, A mint on Gitment, to support count, language and proxy_gateway</span><br><span class="line">  count: true # Show comments count in post meta area</span><br><span class="line">  lazy: false # Comments lazy loading with a button</span><br><span class="line">  cleanly: false # Hide &apos;Powered by ...&apos; on footer, and more</span><br><span class="line">  language: # Force language, or auto switch by theme</span><br><span class="line">  github_user: chenjiancan       # 必须填写github id</span><br><span class="line">  github_repo: gitment-comments  # 必须填写要存放评论的 repo 名字</span><br><span class="line">  client_id: &lt;Client ID 的值&gt;         # 必须填写github auth app 的 Client ID</span><br><span class="line">  client_secret: &lt;Client Secret 的值&gt; # 必须填写github auth app 的 Client Secret</span><br><span class="line">  proxy_gateway: # Address of api proxy, See: https://github.com/aimingoo/intersect</span><br><span class="line">  redirect_protocol: # Protocol of redirect_uri with force_redirect_protocol when mint enabled</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>重新生成站点，部署，查看帖子底部，就会出现评论区</p>
+<p><img src="/img/使用gitment评论系统/2018-08-12-14-05-34.png" alt="评论区截图"><br>点击登录，授权 github 账号权限给 Gitment 应用，就具有评论权限了。</p>
+<ol start="4">
+<li>初始化评论<br>Gitment 默认每篇日志的评论都需要先点击初始化本页评论按键，进行初始化后，才能正常评论，其实它是向issue创建一个label （默认以日志的标题作为值），然而，如果是中文标题的就会初始化失败，原因是 标题太长，超出github的限制， 参考 <a href="https://github.com/imsun/gitment/issues/66" target="_blank" rel="noopener">https://github.com/imsun/gitment/issues/66</a> ，解决方法是改变 Gitment 代码，让它使用短一点点字段，比如用日期，这里使用的方式是 id: decodeURI(window.location.pathname)，具体是修改 /themes/next/layout/_third-party/comments/gitment.swig 里的<br><img src="/img/使用gitment评论系统/2018-08-12-14-14-42.png" alt=""></li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://chenjiancan.github.io/2018/08/12/博客标签和分类/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -867,7 +1029,7 @@ comments: false
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-count">4</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -889,7 +1051,7 @@ comments: false
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
