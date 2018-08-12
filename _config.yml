@@ -82,3 +82,4 @@ deploy:
   type: git
   repo: git@github.com:chenjiancan/chenjiancan.github.io.git
   branch: master
+
