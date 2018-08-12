@@ -5,7 +5,7 @@
   
 
 
-<html class="theme-next muse use-motion" lang="">
+<html class="theme-next pisces use-motion" lang="">
 <head>
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -93,7 +93,7 @@
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/',
-    scheme: 'Muse',
+    scheme: 'Pisces',
     version: '5.1.4',
     sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
     fancybox: true,
@@ -187,6 +187,36 @@
         </li>
       
         
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
         <li class="menu-item menu-item-archives">
           <a href="/archives/" rel="section">
             
@@ -215,6 +245,211 @@
           <div id="content" class="content">
             
   <section id="posts" class="posts-expand">
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://chenjiancan.github.io/2018/08/12/博客标签和分类/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Chen Jiancan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ChenJiancan'Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/08/12/博客标签和分类/" itemprop="url">博客标签和分类</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-08-12T11:45:24+08:00">
+                2018-08-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/blog/" itemprop="url" rel="index">
+                    <span itemprop="name">blog</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>本篇日志记录为 hexo 博客添加标签 tags 和分类功能 categories.</p>
+<h2 id="0x0-hexo-front-matter"><a href="#0x0-hexo-front-matter" class="headerlink" title="0x0 hexo front-matter"></a>0x0 hexo front-matter</h2><p><a href="https://hexo.io/docs/front-matter.html" target="_blank" rel="noopener">说明文档</a>  </p>
+<p>hexo 每篇Markdown文档头部使用 front-matter 块来描述文章的标题，发布日期，标签，分类等元信息,支持 yaml 格式：如本文的</p>
+<pre><code>---
+title: 博客标签和分类
+date: 2018-08-12 11:45:24
+tags: [hexo, blog]
+categories: [blog]
+---
+</code></pre><p>其中 tags 和 categories 字段就是描述标签和分类的，两个字段的值用数组的形式表达。</p>
+<h2 id="0x1-hexo-page"><a href="#0x1-hexo-page" class="headerlink" title="0x1 hexo page"></a>0x1 hexo page</h2><p>我们使用 hexo new “title” 创建新日志，默认是创建在 sourece/_post 下，是普通日志<br>为了显示标签列表页和分类列表页，得创建单独的页面， 在 hexo 里，使用</p>
+<pre><code>hexo new page &quot;page_name&quot; 
+</code></pre><p>来创建，创建 sourece/page_name 目录</p>
+<ol>
+<li><p>创建 tags 页面</p>
+<pre><code>hexo new page &quot;tags&quot; 
+</code></pre><p> 并编辑 sourece/tags/index.html 的 front-matter，指定 type，其中 comments: false 表示此页不显示评论区</p>
+<pre><code>---
+title: All tags
+date: 2018-08-12 11:30:36
+type: &quot;tags&quot;
+comments: false
+---
+</code></pre></li>
+<li><p>创建 categories 页面</p>
+<pre><code>hexo new page &quot;categories&quot; 
+</code></pre><p> 并编辑 sourece/categories/index.html 的 front-matter</p>
+<pre><code>---
+title: categories
+date: 2018-08-12 11:37:55
+type: &quot;categories&quot;
+comments: false
+---
+</code></pre><p> 现在我们重新生成站点，部署后，我们可以在 <a href="https://chenjiancan.github.io/tags/">https://chenjiancan.github.io/tags/</a> 页面下看到标签， <a href="https://chenjiancan.github.io/categories">https://chenjiancan.github.io/categories</a> 下看到分类列表。<br> 但是我们的首页还没有入口可以进入。</p>
+</li>
+</ol>
+<h2 id="0x2-配置主题菜单"><a href="#0x2-配置主题菜单" class="headerlink" title="0x2 配置主题菜单"></a>0x2 配置主题菜单</h2><p>我们的页面样式是依赖主题的，比如我是用 next 主题，就需要在 nex 主题的 _config.yaml 配置页面菜单页菜单项对应的 url</p>
+<ol>
+<li><p>_config.yaml </p>
+<pre><code>menu:
+    home: / || home
+    about: /about/ || user
+    tags: /tags/ || tags
+    categories: /categories/ || th
+    archives: /archives/ || archive
+    # #schedule: /schedule/ || calendar
+    # #sitemap: /sitemap.xml || sitemap
+    # #commonweal: /404/ || heartbeat
+</code></pre><p> 看看效果，菜单的效果，可以看出， menu 下每个字段对应菜单的一个入口，值便是入口地址的相对 url。</p>
+<p> <img src="/img/博客标签和分类/2018-08-12-12-10-31.png" alt=""></p>
+<p> Note: || 后面的字符串表示的是 icon 的名字</p>
+</li>
+<li><p>tags page 效果</p>
+</li>
+</ol>
+<p>是标签云的样子</p>
+<p><img src="/img/博客标签和分类/2018-08-12-12-14-09.png" alt=""></p>
+<ol start="3">
+<li>categories page 效果<br>是目录的样子</li>
+</ol>
+<p><img src="/img/博客标签和分类/2018-08-12-12-14-47.png" alt=""></p>
+<h2 id="0x3-增加-about-页面"><a href="#0x3-增加-about-页面" class="headerlink" title="0x3 增加 about 页面"></a>0x3 增加 about 页面</h2><p>同样的方式，about 是一个页面</p>
+<pre><code>hexo new page &quot;about&quot; 
+</code></pre><p>这么简单就创建了 about 页面了，前面我已经在主题的 _config.yaml 里配置 about 了</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
     
       
 
@@ -270,6 +505,28 @@
             
           </span>
 
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/blog/" itemprop="url" rel="index">
+                    <span itemprop="name">blog</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -610,22 +867,31 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-count">3</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
             
 
             
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
 
             
               
               
               <div class="site-state-item site-state-tags">
-                
-                  <span class="site-state-item-count">1</span>
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">4</span>
                   <span class="site-state-item-name">tags</span>
-                
+                </a>
               </div>
             
 
@@ -678,7 +944,7 @@
 
 
 
-  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
 
 
 
@@ -777,6 +1043,13 @@
 
   
   
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
 
   
 

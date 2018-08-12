@@ -5,7 +5,7 @@
   
 
 
-<html class="theme-next muse use-motion" lang="">
+<html class="theme-next pisces use-motion" lang="">
 <head>
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="hexo, github pages, VSCode," />
+  <meta name="keywords" content="hexo,blog,github pages,VSCode," />
 
 
 
@@ -80,7 +80,7 @@
 
 
 <meta name="description" content="本篇日志记录如何使用 hexo 来部署个人博客到 github pages, 并构建编辑器的过程。 0x0 原理 github pages github pages 官网介绍  github pages 是github为github用户提供的免费的静态页面空间，它与github repo是挂钩的。 github pages 有两种， a) 给用户用的, 比如我的github用户名是 chenjia">
-<meta name="keywords" content="hexo, github pages, VSCode">
+<meta name="keywords" content="hexo,blog,github pages,VSCode">
 <meta property="og:type" content="article">
 <meta property="og:title" content="搭建个人博客">
 <meta property="og:url" content="http://chenjiancan.github.io/2018/08/11/搭建个人博客/index.html">
@@ -90,7 +90,7 @@
 <meta property="og:image" content="http://chenjiancan.github.io/img/搭建个人博客/2018-08-11-22-38-02.png">
 <meta property="og:image" content="http://chenjiancan.github.io/img/搭建个人博客/2018-08-11-23-24-05.png">
 <meta property="og:image" content="http://chenjiancan.github.io/img/搭建个人博客/2018-08-11-23-34-00.png">
-<meta property="og:updated_time" content="2018-08-11T16:04:36.205Z">
+<meta property="og:updated_time" content="2018-08-12T03:47:28.350Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="搭建个人博客">
 <meta name="twitter:description" content="本篇日志记录如何使用 hexo 来部署个人博客到 github pages, 并构建编辑器的过程。 0x0 原理 github pages github pages 官网介绍  github pages 是github为github用户提供的免费的静态页面空间，它与github repo是挂钩的。 github pages 有两种， a) 给用户用的, 比如我的github用户名是 chenjia">
@@ -102,7 +102,7 @@
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/',
-    scheme: 'Muse',
+    scheme: 'Pisces',
     version: '5.1.4',
     sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
     fancybox: true,
@@ -195,6 +195,36 @@
         </li>
       
         
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
         <li class="menu-item menu-item-archives">
           <a href="/archives/" rel="section">
             
@@ -276,6 +306,28 @@
             
           </span>
 
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/blog/" itemprop="url" rel="index">
+                    <span itemprop="name">blog</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -422,7 +474,13 @@
       
         <div class="post-tags">
           
-            <a href="/tags/hexo-github-pages-VSCode/" rel="tag"># hexo, github pages, VSCode</a>
+            <a href="/tags/hexo/" rel="tag"># hexo</a>
+          
+            <a href="/tags/blog/" rel="tag"># blog</a>
+          
+            <a href="/tags/github-pages/" rel="tag"># github pages</a>
+          
+            <a href="/tags/VSCode/" rel="tag"># VSCode</a>
           
         </div>
       
@@ -444,6 +502,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/08/12/博客标签和分类/" rel="prev" title="博客标签和分类">
+                博客标签和分类 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -520,22 +582,31 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-count">3</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
             
 
             
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
 
             
               
               
               <div class="site-state-item site-state-tags">
-                
-                  <span class="site-state-item-count">1</span>
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">4</span>
                   <span class="site-state-item-name">tags</span>
-                
+                </a>
               </div>
             
 
@@ -604,7 +675,7 @@
 
 
 
-  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
 
 
 
@@ -703,6 +774,13 @@
 
   
   
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
 
   
   <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
