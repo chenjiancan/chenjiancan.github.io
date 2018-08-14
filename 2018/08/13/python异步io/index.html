@@ -79,19 +79,19 @@
 
 
 
-<meta name="description" content="0x0 关联概念 异步vs同步 阻塞vs非阻塞 的概念  协程是什么 和线程、进程有什么区别  gevent 是什么http://sdiehl.github.io/gevent-tutorial/https://segmentfault.com/a/1190000006945621   gevent 是一个 python 库，用于 “异步化” python 阻塞代码，可以实现用单线程并发执行多任务">
+<meta name="description" content="0x0 关联概念 异步vs同步 阻塞vs非阻塞 的概念   同步和异步：描述的是通信的双方约定的返回结果的方式。  同步: 请求方发出请求后，等待直到对方有结果，把结果取回来 异步：请求方发出请求后，对方有结果了，对方把结果送过来 比如我们需要在 7 点钟出门，同步的方式就是一直看时间，看到7点，知道时间到了；异步的方式是调个7点的闹钟，闹钟一响，知道时间到了。    阻塞和非阻塞：描述的是程序调">
 <meta name="keywords" content="python,asyncio,aiohttp,gevent">
 <meta property="og:type" content="article">
 <meta property="og:title" content="python异步io">
 <meta property="og:url" content="http://chenjiancan.github.io/2018/08/13/python异步io/index.html">
 <meta property="og:site_name" content="ChenJiancan&#39;Blog">
-<meta property="og:description" content="0x0 关联概念 异步vs同步 阻塞vs非阻塞 的概念  协程是什么 和线程、进程有什么区别  gevent 是什么http://sdiehl.github.io/gevent-tutorial/https://segmentfault.com/a/1190000006945621   gevent 是一个 python 库，用于 “异步化” python 阻塞代码，可以实现用单线程并发执行多任务">
+<meta property="og:description" content="0x0 关联概念 异步vs同步 阻塞vs非阻塞 的概念   同步和异步：描述的是通信的双方约定的返回结果的方式。  同步: 请求方发出请求后，等待直到对方有结果，把结果取回来 异步：请求方发出请求后，对方有结果了，对方把结果送过来 比如我们需要在 7 点钟出门，同步的方式就是一直看时间，看到7点，知道时间到了；异步的方式是调个7点的闹钟，闹钟一响，知道时间到了。    阻塞和非阻塞：描述的是程序调">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://docs.python.org/3/_images/tulip_coro.png">
-<meta property="og:updated_time" content="2018-08-14T10:26:59.428Z">
+<meta property="og:updated_time" content="2018-08-14T15:54:28.720Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="python异步io">
-<meta name="twitter:description" content="0x0 关联概念 异步vs同步 阻塞vs非阻塞 的概念  协程是什么 和线程、进程有什么区别  gevent 是什么http://sdiehl.github.io/gevent-tutorial/https://segmentfault.com/a/1190000006945621   gevent 是一个 python 库，用于 “异步化” python 阻塞代码，可以实现用单线程并发执行多任务">
+<meta name="twitter:description" content="0x0 关联概念 异步vs同步 阻塞vs非阻塞 的概念   同步和异步：描述的是通信的双方约定的返回结果的方式。  同步: 请求方发出请求后，等待直到对方有结果，把结果取回来 异步：请求方发出请求后，对方有结果了，对方把结果送过来 比如我们需要在 7 点钟出门，同步的方式就是一直看时间，看到7点，知道时间到了；异步的方式是调个7点的闹钟，闹钟一响，知道时间到了。    阻塞和非阻塞：描述的是程序调">
 <meta name="twitter:image" content="https://docs.python.org/3/_images/tulip_coro.png">
 
 
@@ -376,12 +376,39 @@
 
       
         <h2 id="0x0-关联概念"><a href="#0x0-关联概念" class="headerlink" title="0x0 关联概念"></a>0x0 关联概念</h2><ol>
-<li><p>异步vs同步 阻塞vs非阻塞 的概念</p>
+<li>异步vs同步 阻塞vs非阻塞 的概念</li>
+</ol>
+<ul>
+<li><p>同步和异步：描述的是通信的双方约定的返回结果的方式。</p>
+<ul>
+<li>同步: 请求方发出请求后，等待直到对方有结果，把结果取回来</li>
+<li><p>异步：请求方发出请求后，对方有结果了，对方把结果送过来</p>
+<p>比如我们需要在 7 点钟出门，同步的方式就是一直看时间，看到7点，知道时间到了；异步的方式是调个7点的闹钟，闹钟一响，知道时间到了。</p>
 </li>
-<li><p>协程是什么 和线程、进程有什么区别</p>
+</ul>
 </li>
-<li><p>gevent 是什么<br><a href="http://sdiehl.github.io/gevent-tutorial/" target="_blank" rel="noopener">http://sdiehl.github.io/gevent-tutorial/</a><br><a href="https://segmentfault.com/a/1190000006945621" target="_blank" rel="noopener">https://segmentfault.com/a/1190000006945621</a></p>
+<li><p>阻塞和非阻塞：描述的是程序调用（耗时的动作，如IO）发生后的调用方的状态</p>
+<ul>
+<li>阻塞： 调用后，调用方的线程就停下来，知道调用完成返回才继续执行</li>
+<li><p>非阻塞： 调用后，直接返回，调用方继续执行     </p>
+<p>比如： 我们需要7点出门，查看时间是否到了7点，阻塞的方式，就是一直看着时钟，等到7点； 非阻塞的方式可以是，瞄一下时钟，如果没到7点，打一盘游戏，再瞄一下，没到继续玩，反复直到时间到了。</p>
 </li>
+</ul>
+</li>
+<li><p>我觉得要讨论一个过程是同步/异步,一个调用时阻塞/非阻塞，必须针对具体的对象来说。</p>
+</li>
+</ul>
+<p>我们应用可以用异步的方式封装 select、poll 这种同步结构，因为针对的对象不同，就称为不同的方式。 asyncio 成为异步io，但是底层可能用到是 select 实现的。</p>
+<ol start="2">
+<li>协程是什么 和线程、进程有什么区别</li>
+</ol>
+<ul>
+<li>进程是操作系统任务的单位： 每个进程有独立的内存空间，互不干扰，创建进程需要创建或者拷贝进程空间，占用很多资源，进程切换需要内核切换上下文</li>
+<li>线程是同一个进程内，共享进程空间的任务单位，线程每个线程有独立的控制块，是虚拟出来的并发执行的任务，但是共享内存，线程切换需要内核切换上下文</li>
+<li>协程是用户态实现的，协程切换任务由应用层面实现，开销很小。同个调度器下的协程应该是在同一个线程内</li>
+</ul>
+<ol start="3">
+<li>gevent 是什么<br><a href="http://sdiehl.github.io/gevent-tutorial/" target="_blank" rel="noopener">http://sdiehl.github.io/gevent-tutorial/</a><br><a href="https://segmentfault.com/a/1190000006945621" target="_blank" rel="noopener">https://segmentfault.com/a/1190000006945621</a></li>
 </ol>
 <p>gevent 是一个 python 库，用于 “异步化” python 阻塞代码，可以实现用单线程并发执行多任务。<br>比如正常 socket 库是同步的，我们正常写的 socket.connect/read/write 都是阻塞，要并发，通常使用多线程，而gevent通过monkey patch的<br>方式，直接修改了socket标准库的运行时代码，使得代码运行起来是非阻塞的。</p>
 <ol start="4">
@@ -392,6 +419,7 @@
 <li><p>asyncio 是什么<br>python3.5+ 的标准库，用于编写异步应用 （Note）<br><a href="http://asyncio.readthedocs.io/en/latest/getting_started.html" target="_blank" rel="noopener">http://asyncio.readthedocs.io/en/latest/getting_started.html</a></p>
 </li>
 </ol>
+<p>异步IO是计算机操作系统对输入输出的一种处理方式：发起IO请求的线程不等IO操作完成，就继续执行随后的代码，IO结果用其他方式通知发起IO请求的程序。与异步IO相对的是更为常见的“同步（阻塞）IO”：发起IO请求的线程不从正在调用的IO操作函数返回（即被阻塞），直至IO操作完成。<br>– Wikipedia</p>
 <h2 id="0x1-Asyncio-编程"><a href="#0x1-Asyncio-编程" class="headerlink" title="0x1 Asyncio 编程"></a>0x1 Asyncio 编程</h2><p>协程是基于生成器 yield 的特性实现的，不是 python3.5 之后才有的，但是 python3.5之后，带来了  async, await 关键字等更加自然的支持，我们可以比较容易的理解和使用协程，所以这里我都是以 python3.5+ 的特性学习。 </p>
 <p>但是协程不是生成器，协程和生成器混淆就很头大了。</p>
 <p>tornado 的特点就是基于异步io，后面的版本也迁移到 asyncio 上。<br><a href="https://github.com/tornadoweb/tornado/blob/master/docs/releases/v5.0.0.rst" target="_blank" rel="noopener">https://github.com/tornadoweb/tornado/blob/master/docs/releases/v5.0.0.rst</a></p>
