@@ -259,6 +259,225 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://chenjiancan.github.io/2018/08/15/python-并发编程——Futures/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Chen Jiancan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ChenJiancan'Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/08/15/python-并发编程——Futures/" itemprop="url">python 并发编程——Futures</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-08-15T16:18:34+08:00">
+                2018-08-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/python/" itemprop="url" rel="index">
+                    <span itemprop="name">python</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/python/并发/" itemprop="url" rel="index">
+                    <span itemprop="name">并发</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>本篇日志记录python3 标准库中并发编程模块 concurrent.futures 的使用</p>
+<h1 id="doc"><a href="#doc" class="headerlink" title="doc"></a><a href="https://docs.python.org/3.6/library/concurrent.futures.html?highlight=concurrent%20futures#concurrent.futures.Executor" target="_blank" rel="noopener">doc</a></h1><h2 id="0x0-concurrent-futures-模块"><a href="#0x0-concurrent-futures-模块" class="headerlink" title="0x0 concurrent.futures 模块"></a>0x0 concurrent.futures 模块</h2><p>concurrent.futures 模块是python3.2 之后加入标准库的，它为异步执行任务提供了抽象接口，通过 ThreadPoolExecutor 和 ProcessPoolExecutor 分别提供基于线程和进程的异步执行，接口由 Executor 抽象类定义。</p>
+<ol start="0">
+<li>Executor 抽象类</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">concurrent</span>.<span class="title">futures</span>.<span class="title">Executor</span>:</span></span><br></pre></td></tr></table></figure>
+<p>定义了以下方法：   </p>
+<ul>
+<li><p>submit(fn, *args, **kwargs) : 提交一个函数到 executor 中执行</p>
+</li>
+<li><p>map(func, *iterables, timeout=None, chunksize=1) ：提交一个函数和一组输入，映射为多个任务worker到executor中执行， chuncksize 表示将输入分成数量为 chunksize 的分组，输入到一个任务，只对 ProcessPoolExecutor 有效；返回值是每个任务执行 func 的返回值列表</p>
+</li>
+<li><p>shutdown(wait=True) ： 关闭executor，wait=True 表示等待所有任务完成再关闭</p>
+</li>
+</ul>
+<ol>
+<li>TheadpoolExecutor 线程池</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">concurrent</span>.<span class="title">futures</span>.<span class="title">ThreadPoolExecutor</span><span class="params">(max_workers=None, thread_name_prefix=<span class="string">''</span>)</span></span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>max_workers: 指定池中最大的线程数，默认为cpu核心数*5</li>
+<li>thread_name_prefix：线程名字前缀，方便调试</li>
+</ul>
+<ol start="2">
+<li>ProcessPoolExecutor 进程池</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">concurrent</span>.<span class="title">futures</span>.<span class="title">ProcessPoolExecutor</span><span class="params">(max_workers=None)</span></span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>max_workers: 指定池中最大的进程程数，默认为cpu核心数 </li>
+</ul>
+<ol start="3">
+<li>Future 对象<br>executor.submit 返回到是 future 对象，返回代表executor已经登记了这个异步任务，future对象包装了func，提供控制异步任务的接口</li>
+</ol>
+<p>class concurrent.futures.Future</p>
+<p>cancel()： 取消任务，返回值True表示成功取消</p>
+<p>cancelled()：是否已经取消</p>
+<p>running()：是否正在运行</p>
+<p>done()： 是否完成</p>
+<p>result(timeout=None)： 等待异步任务的返回值， 如果取消了抛 CancelledError 异常</p>
+<p>exception(timeout=None)： 如果发生了异常，取出异常</p>
+<p>add_done_callback(fn)： 添加回调函数，异步任务完成则回调，回调会在添加回调的线程执行，如果抛出的异常是 Exception的子类，会被忽略</p>
+<p>以下几个用于单元测试<br>set_running_or_notify_cancel()<br>set_result(result)<br>set_exception(exception)    </p>
+<ol start="4">
+<li>模块方法，用于等待 future 结果</li>
+</ol>
+<ul>
+<li><p>concurrent.futures.wait(fs, timeout=None, return_when=ALL_COMPLETED)<br>与 asyncio 的 api ayncio.wait 是一样的功能;<br>返回完成的和为完成的两组 Futures 结果, 用 future.result() 获取结果<br>它会等待 futures 执行的结果，默认 return_when=ALL_COMPLETE 会等到所有futures都完成才返回， FIRST_COMPLETED 表示有一个完成就返回，FIRST_EXCEPTION表示有一个产生异常就返回</p>
+</li>
+<li><p>concurrent.futures.as_completed(fs, timeout=None)<br>返回的是一个生成器对象，先完成的future的结果先返回</p>
+</li>
+</ul>
+<h2 id="0x1-使用-ThreadPoolExecutor-进行编程"><a href="#0x1-使用-ThreadPoolExecutor-进行编程" class="headerlink" title="0x1 使用 ThreadPoolExecutor 进行编程"></a>0x1 使用 ThreadPoolExecutor 进行编程</h2><ol>
+<li><p>使用 with 语句创建一个 executor<br>with concurrent.futures.ThreadPoolExecutor(max_workers=2) as executor</p>
+</li>
+<li><p>使用 executor.submit 提交任务<br> 对返回的多个 <code>future</code> 需要使用模块函数 concurrent.futures.as_completed 或 wait 进行处理；<br> as_completed 处理的 futures 先完成先返回结果<br> NOTE: wait 返回到是两个值， 分别是完成的 future 列表和pending的future列表</p>
+</li>
+<li><p>或使用 executor.map 创建任务多个任务<br> map 直接返回<code>结果</code>列表，所有任务都完成，才返回</p>
+</li>
+<li><p>等待结果</p>
+</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">import time</span><br><span class="line">import random</span><br><span class="line">URLS = [&apos;http://www.foxnews.com/&apos;,</span><br><span class="line">        &apos;http://www.cnn.com/&apos;,</span><br><span class="line">        &apos;http://europe.wsj.com/&apos;,</span><br><span class="line">        &apos;http://www.bbc.co.uk/&apos;,</span><br><span class="line">        &apos;http://some-made-up-domain.com/&apos;]</span><br><span class="line"></span><br><span class="line">def load_url(url, timeout=None):</span><br><span class="line">    print(&quot;load url &quot;, url, threading.current_thread().getName())</span><br><span class="line">    time.sleep(random.random())</span><br><span class="line">    return &quot;page for &quot; + url</span><br><span class="line"></span><br><span class="line">def submit_example():</span><br><span class="line">    # We can use a with statement to ensure threads are cleaned up promptly</span><br><span class="line">    with concurrent.futures.ThreadPoolExecutor(max_workers=2) as executor:</span><br><span class="line"></span><br><span class="line">        # Start the load operations and mark each future with its URL</span><br><span class="line">        future_to_url = &#123;executor.submit(load_url, url, 60): url for url in URLS&#125;</span><br><span class="line">        time.sleep(10)</span><br><span class="line">        # 等待执行完成, 先完成先返回</span><br><span class="line">        for future in concurrent.futures.as_completed(future_to_url):</span><br><span class="line">            url = future_to_url[future]</span><br><span class="line">            try:</span><br><span class="line">                data = future.result()</span><br><span class="line">            except Exception as exc:</span><br><span class="line">                print(&apos;%r generated an exception: %s&apos; % (url, exc))</span><br><span class="line">            else:</span><br><span class="line">                print(&apos;%r page is %d bytes&apos; % (url, len(data)))</span><br><span class="line"></span><br><span class="line">def map_example():</span><br><span class="line">    with concurrent.futures.ThreadPoolExecutor(max_workers=2) as executor:</span><br><span class="line">        # 开始执行，全部执行完成才返回，按顺序返回</span><br><span class="line">        results = executor.map(load_url, URLS, chunksize=2)   # chunksize is ignored by ThreadPoolExecutor.</span><br><span class="line">        print(&quot;result: &quot;, list(results))</span><br><span class="line"></span><br><span class="line">if __name__ == &apos;__main__&apos;:</span><br><span class="line">    submit_example()</span><br><span class="line">    map_example()</span><br></pre></td></tr></table></figure>
+<h2 id="0x1-使用-ProcessPoolExecutor-进行编程"><a href="#0x1-使用-ProcessPoolExecutor-进行编程" class="headerlink" title="0x1 使用 ProcessPoolExecutor 进行编程"></a>0x1 使用 ProcessPoolExecutor 进行编程</h2><p>api 与 ThreadPoolExecutor 是相同的, 上面例子直接替换 ThreadPoolExecutor 为 ProcessPoolExecutor 就变成了进程池。</p>
+<h2 id="0x3-multiprocessing-pool-模块"><a href="#0x3-multiprocessing-pool-模块" class="headerlink" title="0x3 multiprocessing.pool 模块"></a>0x3 multiprocessing.pool 模块</h2><p>python 另一个模块 multiprocessing 也提供了进程池和线程池，分别是：<br>multiprocessing.Pool  进程池<br>multiprocessing.pool.ThreadPool 线程池  </p>
+<p>用法类似 executor 的 map 方法</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">p = Pool(<span class="number">5</span>)   <span class="comment"># 线程版 p = ThreadPool(5)</span></span><br><span class="line">results = p.map(func, [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>])</span><br></pre></td></tr></table></figure>
+<p>用法跟 executor 很接近， 但是 python 文档里一直没有关于 ThreadPool 的部分，所以 ThreadPool 是一个未完成的和充分测试的模块，谨慎使用。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://chenjiancan.github.io/2018/08/13/python异步io/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1322,7 +1541,7 @@ comments: false
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-count">6</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -1344,7 +1563,7 @@ comments: false
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-count">12</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
